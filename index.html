@@ -12,13 +12,6 @@
             font-family: 'Inter', sans-serif;
             background-color: #F1F5F9; /* Page bg: slate-100 */
             color: #334155; /* Text (body): slate-700 */
-            -webkit-user-select: auto; /* Allow text selection */
-            -moz-user-select: auto;
-            -ms-user-select: auto;
-            user-select: auto;
-        }
-        body.highlight-active {
-            cursor: crosshair; /* Cursor for highlighter mode */
         }
         .header-section {
             background-color: #0F766E; /* Primary (tabs active, header/footer): Teal 700 */
@@ -148,13 +141,6 @@
         }
         .text-purple-700, .text-blue-800, .text-purple-600 { /* For Summary/Recap texts */
             color: #0F172A; /* Headings: slate-900 */
-        }
-
-        /* Highlight style */
-        .highlighted-text {
-            background-color: #FDE68A; /* Amber 200 for highlight */
-            padding: 0 0.2em;
-            border-radius: 0.2em;
         }
     </style>
 </head>
@@ -528,15 +514,6 @@
                 </div>
             </div>
         </div>
-        <!-- Highlighter Controls -->
-        <div class="flex justify-center mt-6 space-x-4">
-            <button id="toggleHighlighterButton" class="bg-[#0F766E] hover:bg-[#115E59] text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                Enable Highlighter Mode
-            </button>
-            <button id="clearAllHighlightsButton" class="bg-[#9F1239] hover:bg-[#E11D48] text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                Clear All Highlights
-            </button>
-        </div>
     </main>
 
     <footer class="footer-section">
@@ -547,12 +524,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabPanes = document.querySelectorAll('.tab-pane');
-            const toggleHighlighterButton = document.getElementById('toggleHighlighterButton');
-            const clearAllHighlightsButton = document.getElementById('clearAllHighlightsButton');
 
-            let isHighlighterActive = false; // State to track highlighter mode
-
-            // Function to handle tab switching
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     // Deactivate all buttons and hide all panes
@@ -565,14 +537,6 @@
                     // Show the corresponding pane
                     const targetTabId = button.dataset.tab;
                     document.getElementById(targetTabId).classList.add('active');
-
-                    // Ensure selection is cleared and highlighter mode is off when switching tabs
-                    if (isHighlighterActive) {
-                        isHighlighterActive = false;
-                        toggleHighlighterButton.textContent = 'Enable Highlighter Mode';
-                        document.body.classList.remove('highlight-active');
-                    }
-                    window.getSelection().removeAllRanges();
                 });
             });
 
@@ -582,63 +546,6 @@
                 const initialTabId = initialTabButton.dataset.tab;
                 document.getElementById(initialTabId).classList.add('active');
             }
-
-            // Toggle Highlighter Mode
-            toggleHighlighterButton.addEventListener('click', () => {
-                isHighlighterActive = !isHighlighterActive; // Toggle the state
-                if (isHighlighterActive) {
-                    toggleHighlighterButton.textContent = 'Disable Highlighter Mode';
-                    document.body.classList.add('highlight-active'); // Change cursor
-                } else {
-                    toggleHighlighterButton.textContent = 'Enable Highlighter Mode';
-                    document.body.classList.remove('highlight-active'); // Reset cursor
-                }
-                window.getSelection().removeAllRanges(); // Clear any existing selection when toggling
-            });
-
-            // Apply highlight on text selection when highlighter is active
-            document.addEventListener('mouseup', () => {
-                if (isHighlighterActive) {
-                    const selection = window.getSelection();
-                    if (selection.toString().length > 0) { // Check if text is actually selected
-                        const range = selection.getRangeAt(0);
-                        const span = document.createElement('span');
-                        span.classList.add('highlighted-text');
-                        
-                        try {
-                            // Surround the selected content with the highlight span
-                            range.surroundContents(span);
-                        } catch (e) {
-                            // Fallback for more complex selections that cannot be cleanly surrounded.
-                            // This might happen if a selection spans across different element types
-                            // or partially selects existing elements. For simplicity, we log a warning.
-                            // A more robust solution for complex DOM mutations would require
-                            // iterating through nodes in the range and applying highlights individually.
-                            console.warn("Could not directly surround contents with highlight. Try selecting text within a single element.", e);
-                        }
-                        // Clear the visual selection after applying highlight
-                        selection.removeAllRanges();
-                    }
-                }
-            });
-
-            // Clear All Highlights
-            clearAllHighlightsButton.addEventListener('click', () => {
-                const highlightedElements = document.querySelectorAll('.highlighted-text');
-                highlightedElements.forEach(span => {
-                    const parent = span.parentNode;
-                    if (parent) {
-                        // Replace the highlight span with its original text content
-                        parent.replaceChild(document.createTextNode(span.textContent), span);
-                        parent.normalize(); // Clean up text nodes (merges adjacent text nodes)
-                    }
-                });
-                // After clearing, ensure highlighter mode is off and cursor is reset
-                isHighlighterActive = false;
-                toggleHighlighterButton.textContent = 'Enable Highlighter Mode';
-                document.body.classList.remove('highlight-active');
-                window.getSelection().removeAllRanges(); // Clear selection
-            });
         });
     </script>
 </body>
