@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breathing Life: Respiratory & Circulatory Systems</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for font and background colors based on new palette */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F1F5F9; /* Page bg: slate-100 */
+            color: #334155; /* Text (body): slate-700 */
+        }
+        .header-section {
+            background-color: #0F766E; /* Primary (tabs active, header/footer): Teal 700 */
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom-left-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tabs-container {
+            background-color: #FFFFFF; /* Card bg */
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2.5rem;
+            border: 1px solid #E2E8F0; /* Borders */
+            overflow: hidden; /* To contain rounded corners */
+        }
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            border-bottom: 1px solid #E2E8F0; /* Borders */
+            background-color: #F0FDFA; /* Primary hover/surface: Teal 50 */
+            padding: 0.5rem;
+            border-top-left-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+        }
+        .tab-button {
+            flex: 1 1 auto; /* Allow items to grow and shrink, minimum width to prevent squishing */
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #334155; /* Text (body): slate-700 */
+            transition: all 0.3s ease;
+            text-align: center;
+            border-radius: 0.75rem; /* Slightly rounded buttons */
+            margin: 0.25rem; /* Space between buttons */
+            white-space: nowrap; /* Prevent text wrapping inside button */
+        }
+        .tab-button.active {
+            background-color: #0F766E; /* Primary (tabs active, header/footer): Teal 700 */
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .tab-content {
+            padding: 2rem;
+        }
+        .content-block {
+            background-color: #FFFFFF; /* Card bg */
+            padding: 1rem 0; /* Adjusted padding within tab content */
+            margin-bottom: 1.5rem; /* Spacing between sections within a tab */
+        }
+        .highlight-box {
+            background-color: #ECFDF5; /* Success/highlight surface */
+            border-left: 5px solid #10B981; /* Success/highlight border */
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+        .fun-fact {
+            background-color: #FFFBEB; /* Fun/warm accent surface */
+            border-left: 5px solid #F59E0B; /* Fun/warm accent border */
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+        .anatomy-table {
+            width: 100%; /* Ensure table takes full width */
+            border-collapse: collapse;
+            border-radius: 1rem; /* Rounded corners for the entire table */
+            overflow: hidden; /* Ensures rounded corners are applied */
+        }
+        .anatomy-table th, .anatomy-table td {
+            padding: 0.75rem 1rem;
+            border: 1px solid #E2E8F0; /* Borders */
+            text-align: left;
+        }
+        .anatomy-table th {
+            background-color: #E0F2FE; /* Info (secondary accent) surface */
+            font-weight: 600;
+        }
+        .anatomy-table tr:nth-child(even) {
+            background-color: #F8FAFC; /* Lighter shade for table rows */
+        }
+        .transition-section {
+            background-color: #FFE4E6; /* Alert/transition surface */
+            border-left: 5px solid #E11D48; /* Alert/transition border */
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #9F1239; /* Alert/transition text Rose 800 */
+        }
+        .footer-section {
+            background-color: #115E59; /* Primary (footer deeper): Teal 800 */
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-top-left-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+            margin-top: 2rem;
+        }
+        /* Hidden by default, activated by JS */
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        /* Text colors updated according to the new palette */
+        .text-gray-800 { /* For H2 headings */
+            color: #0F172A; /* Headings: slate-900 */
+        }
+        .text-blue-700 { /* For H3 headings */
+            color: #0369A1; /* Info (secondary accent): Sky 700 */
+        }
+        .text-green-700 { /* For Prevention text */
+            color: #047857; /* Success/highlight: Emerald 700 */
+        }
+        .text-red-700 { /* For Blood Pressure warning */
+            color: #9F1239; /* Alert/transition text: Rose 800 */
+        }
+        .text-purple-700, .text-blue-800, .text-purple-600 { /* For Summary/Recap texts */
+            color: #0F172A; /* Headings: slate-900 */
+        }
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <!-- Header Section - Main Title -->
+    <header class="header-section">
+        <h1 class="text-5xl font-extrabold mb-4">Breathing Life: The Respiratory & Circulatory Systems</h1>
+        <p class="text-xl font-medium">From oxygen in the air to energy in your cells. 💨 ❤️</p>
+    </header>
+
+    <main class="container mx-auto p-6 md:p-8 lg:p-10">
+
+        <div class="tabs-container">
+            <!-- Tab Buttons -->
+            <div class="tab-buttons" id="tab-buttons">
+                <button class="tab-button active" data-tab="respiration-intro">Respiratory Intro</button>
+                <button class="tab-button" data-tab="respiration-anatomy">Respiratory Anatomy & Gas Exchange</button>
+                <button class="tab-button" data-tab="respiration-health">Breathing Mechanics & Respiratory Health</button>
+                <button class="tab-button" data-tab="circulation-intro">Circulatory Intro & Heart</button>
+                <button class="tab-button" data-tab="circulation-health">Blood, Vessels & Circulatory Health</button>
+                <button class="tab-button" data-tab="summary-connection">The Connection & Summary</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Tab 1: Introduction to Respiration -->
+                <div id="respiration-intro" class="tab-pane active">
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🌬️</span> Introduction to Respiration</h2>
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-semibold text-blue-700 mb-2">Respiration vs Breathing:</h3>
+                            <p class="mb-2"><strong>Breathing</strong> is the physical movement of air into and out of the lungs — what happens when you inhale and exhale.</p>
+                            <p><strong>Respiration</strong> is a chemical process inside cells, using oxygen from the air to release energy from food.</p>
+                        </div>
+                        <div class="highlight-box">
+                            <p><strong>Real-Life Hook:</strong> "Every time you yawn in class, you’re actually fixing your oxygen levels!" 😴</p>
+                        </div>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">✨</span> Why We Need a Respiratory System</h2>
+                        <ul class="list-disc pl-6 mb-4 space-y-2">
+                            <li><strong>Oxygen is crucial for cellular respiration</strong>—cells use it to release energy from glucose.</li>
+                            <li><strong>Removal of CO₂:</strong> When cells make energy, they also produce carbon dioxide (CO₂), which must be removed to prevent blood from becoming too acidic.</li>
+                        </ul>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-blue-700 mb-2">Types of Respiration:</h3>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li><strong>Aerobic Respiration:</strong> Uses oxygen, produces a lot of energy.</li>
+                                <li><strong>Anaerobic Respiration:</strong> Happens without oxygen (e.g., during heavy exercise), produces less energy and can cause muscle cramps. 🏃‍♂️💨</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Tab 2: Respiratory Anatomy & Gas Exchange -->
+                <div id="respiration-anatomy" class="tab-pane">
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🔍</span> Respiratory Anatomy Overview</h2>
+                        <div class="overflow-x-auto rounded-xl">
+                            <table class="w-full min-w-[600px] anatomy-table">
+                                <thead>
+                                    <tr>
+                                        <th class="rounded-tl-xl">Structure</th>
+                                        <th class="rounded-tr-xl">Function</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Nose/Mouth</td><td>Entryway for air; nose filters & moistens</td></tr>
+                                    <tr><td>Pharynx</td><td>Shared pathway for food and air</td></tr>
+                                    <tr><td>Larynx</td><td>Voice box, prevents food from entering airway</td></tr>
+                                    <tr><td>Trachea</td><td>Windpipe; keeps airway open</td></tr>
+                                    <tr><td>Bronchi</td><td>Two main passageways into lungs</td></tr>
+                                    <tr><td>Bronchioles</td><td>Smaller branches dissipating into alveoli</td></tr>
+                                    <tr><td>Alveoli</td><td>Tiny sacs where gas exchange happens</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">👃</span> Nasal Cavity & Pharynx</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Nasal hairs trap dust and debris.</li>
+                            <li>Mucus traps micro-particles and germs. 🤧</li>
+                            <li>Air is warmed & moistened as it passes through, protecting delicate lung tissue.</li>
+                            <li><strong>Pharynx:</strong> Acts as a crossroads for food (to esophagus) and air (to trachea).</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🗣️</span> Larynx & Trachea</h2>
+                        <ul class="list-disc pl-6 mb-4 space-y-2">
+                            <li><strong>Larynx (voice box):</strong> Creates sound, directs air, blocks food entry with the epiglottis during swallowing.</li>
+                            <li><strong>Trachea (windpipe):</strong> Has C-shaped cartilage rings to keep it open, even when you move or bend your neck.</li>
+                        </ul>
+                        <div class="fun-fact">
+                            <p><strong>Fun Example:</strong> Choking risk increases if you talk or laugh while eating—food can enter the airway by mistake! 😬</p>
+                        </div>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🌳</span> Bronchi & Bronchioles</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Bronchi:</strong> Two main tubes splitting off from trachea, each leading to one lung.</li>
+                            <li><strong>Bronchioles:</strong> Smaller branches inside lungs, increasing the total surface area for efficient gas exchange.</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🎈</span> Alveoli Structure & Function</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Alveoli:</strong> About 300 million tiny air sacs in both lungs.</li>
+                            <li><strong>Structure:</strong> Extremely thin walls (just one cell thick), surrounded by capillaries.</li>
+                            <li><strong>Function:</strong> Huge surface area lets more oxygen and carbon dioxide pass between air and blood quickly.</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">↔️</span> Gas Exchange Mechanism</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>O₂ diffusion:</strong> Oxygen from alveoli moves into blood because blood has less oxygen.</li>
+                            <li><strong>CO₂ diffusion:</strong> Carbon dioxide in blood moves into alveoli because alveoli have less CO₂.</li>
+                            <li><strong>Hemoglobin:</strong> A protein in red blood cells that binds oxygen and carries it throughout your body. ❤️‍🩹</li>
+                            <li><strong>Partial Pressure:</strong> O₂ and CO₂ move due to differences in their concentration (partial pressure) across the alveoli-blood barrier.</li>
+                        </ul>
+                    </section>
+                </div>
+
+                <!-- Tab 3: Breathing Mechanics & Respiratory Health -->
+                <div id="respiration-health" class="tab-pane">
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">⬆️⬇️</span> Breathing Mechanism</h2>
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-semibold text-blue-700 mb-2">Inhalation:</h3>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Diaphragm contracts & flattens, rib cage moves up.</li>
+                                <li>Lung volume increases, air rushes in. 😮‍💨</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-blue-700 mb-2">Exhalation:</h3>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Diaphragm relaxes & rises, rib cage moves down.</li>
+                                <li>Lung volume decreases, air is pushed out. exhale</li>
+                            </ul>
+                        </div>
+                        <p class="mt-4 font-medium"><strong>Pressure Link:</strong> Changes in lung volume change pressures, causing air movement.</p>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🧠</span> Control of Breathing</h2>
+                        <ul class="list-disc pl-6 mb-4 space-y-2">
+                            <li><strong>Medulla oblongata (brain stem):</strong> Controls automatic breathing.</li>
+                            <li><strong>CO₂ concentration</strong> in blood triggers faster breathing, not low O₂.</li>
+                        </ul>
+                        <div class="fun-fact">
+                            <p><strong>Real-Life Example:</strong> When running, muscles make more CO₂—brain tells you to breathe faster! 🏃‍♀️💨</p>
+                        </div>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">📏</span> Respiratory Volumes</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Tidal volume:</strong> Amount of air moved in a normal breath.</li>
+                            <li><strong>Vital capacity:</strong> Maximum air you can exhale after a deep breath.</li>
+                            <li><strong>Residual volume:</strong> Air left in lungs after full exhalation (keeps lungs from collapsing).</li>
+                            <li>Athletes typically have higher vital capacities than non-athletes due to stronger lungs. 🏋️‍♂️</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">😷</span> Diseases of Respiratory System</h2>
+                        <ul class="list-disc pl-6 mb-4 space-y-2">
+                            <li><strong>Asthma:</strong> Airways narrow, causing difficulty breathing; triggered by allergies.</li>
+                            <li><strong>Bronchitis:</strong> Inflammation of bronchi; cough, mucus production.</li>
+                            <li><strong>Pneumonia:</strong> Infection filling alveoli with fluid; causes fever, trouble breathing.</li>
+                            <li><strong>Emphysema:</strong> Alveoli damage; leads to shortness of breath.</li>
+                        </ul>
+                        <p class="mt-4 font-semibold text-green-700"><strong>Prevention:</strong> Avoid smoking, pollution, practice good hygiene, regular exercise. ✅</p>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🏠</span> Everyday Applications</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Altitude:</strong> Less oxygen in high mountains = harder to breathe (mountaineers train their lungs!). 🏔️</li>
+                            <li><strong>Deep Breathing:</strong> Activates calming nervous system (parasympathetic). 🧘‍♀️</li>
+                            <li><strong>Clean Air:</strong> Vital for healthy lungs; pollutants can trigger respiratory problems. 🌳</li>
+                        </ul>
+                    </section>
+                </div>
+
+                <!-- Tab 4: Introduction to Circulation & Heart -->
+                <div id="circulation-intro" class="tab-pane">
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🚀</span> Transition</h2>
+                        <div class="transition-section">
+                            “Oxygen is ready — now let’s deliver it everywhere!” 🚀
+                        </div>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">❤️</span> Introduction to Circulation</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Purpose:</strong> Transport nutrients, gases (oxygen and carbon dioxide), hormones, and wastes throughout the body.</li>
+                            <li><strong>Closed Circulatory System:</strong> Blood is contained within vessels that form a continuous loop.</li>
+                            <li>The heart pumps blood to ensure everything reaches every cell efficiently. 💖</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🔄</span> Types of Circulation in Humans</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Pulmonary Circulation:</strong> Carries deoxygenated blood from the heart to the lungs to get oxygen, then back to the heart.</li>
+                            <li><strong>Systemic Circulation:</strong> Carries oxygenated blood from the heart to the rest of the body and returns deoxygenated blood back to the heart.</li>
+                            <li><strong>Coronary Circulation:</strong> Supplies the heart muscle itself with oxygen and nutrients.</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🧐</span> Circulatory Anatomy Overview</h2>
+                        <div class="overflow-x-auto rounded-xl">
+                            <table class="w-full min-w-[600px] anatomy-table">
+                                <thead>
+                                    <tr>
+                                        <th class="rounded-tl-xl">Structure</th>
+                                        <th class="rounded-tr-xl">Function</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Heart</td><td>Pumps blood throughout the body</td></tr>
+                                    <tr><td>Arteries</td><td>Carry oxygen-rich blood away from the heart</td></tr>
+                                    <tr><td>Veins</td><td>Carry oxygen-poor blood back to the heart</td></tr>
+                                    <tr><td>Capillaries</td><td>Tiny vessels where substances exchange between blood and tissues</td></tr>
+                                    <tr><td>Blood</td><td>Transports oxygen, nutrients, wastes, and hormones</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🫀</span> The Heart Structure</h2>
+                        <h3 class="text-2xl font-semibold text-blue-700 mb-2">Four chambers:</h3>
+                        <ul class="list-disc pl-6 mb-4 space-y-2">
+                            <li>Right atrium and ventricle (handle deoxygenated blood)</li>
+                            <li>Left atrium and ventricle (handle oxygenated blood)</li>
+                        </ul>
+                        <h3 class="text-2xl font-semibold text-blue-700 mb-2">Valves prevent backflow:</h3>
+                        <ul class="list-disc pl-6 mb-4 space-y-2">
+                            <li>Tricuspid (right side)</li>
+                            <li>Bicuspid or mitral (left side)</li>
+                            <li>Semilunar valves control blood leaving ventricles.</li>
+                        </ul>
+                        <div class="highlight-box">
+                            <p><strong>Analogy:</strong> Heart works like a double pump — right side sends blood to lungs, left side sends blood to body. ⚙️</p>
+                        </div>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">➡️</span> Blood Flow Pathway</h2>
+                        <ul class="list-decimal pl-6 space-y-2">
+                            <li>Blood enters right atrium from body via vena cava (deoxygenated).</li>
+                            <li>Flows to right ventricle, pumped to lungs via pulmonary artery.</li>
+                            <li>Oxygenated blood returns to left atrium via pulmonary veins.</li>
+                            <li>Flows into left ventricle, pumped into body through the aorta.</li>
+                        </ul>
+                        <p class="mt-4 font-medium">This continuous circuit keeps blood moving to deliver oxygen and nutrients. 🌐</p>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">⏰</span> Cardiac Cycle</h2>
+                        <p class="mb-2">Consists of two phases:</p>
+                        <ul class="list-disc pl-6 mb-4 space-y-2">
+                            <li><strong>Systole:</strong> Heart muscle contracts, pumping blood out.</li>
+                            <li><strong>Diastole:</strong> Heart muscle relaxes, chambers fill with blood.</li>
+                        </ul>
+                        <p class="font-medium mb-2"><strong>Lub-dub sound:</strong> Heart valves closing make these sounds. 💓</p>
+                        <p>Each heartbeat involves coordinated atrial and ventricular contractions.</p>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">⚡</span> Electrical Activity of the Heart</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>SA node:</strong> Heart’s natural pacemaker; starts electrical signal.</li>
+                            <li><strong>AV node:</strong> Delays signal slightly, allowing ventricles to fill.</li>
+                            <li><strong>Purkinje fibers:</strong> Spread signal through ventricles for coordinated contraction.</li>
+                        </ul>
+                        <p class="mt-4 font-medium"><strong>Electrocardiogram (ECG)</strong> records this electrical activity. 📈</p>
+                    </section>
+                </div>
+
+                <!-- Tab 5: Blood, Vessels & Circulatory Health -->
+                <div id="circulation-health" class="tab-pane">
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🛣️</span> Blood Vessels</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Arteries:</strong> Thick walls, carry blood under high pressure.</li>
+                            <li><strong>Veins:</strong> Thinner walls, have valves to prevent backflow, blood under lower pressure.</li>
+                            <li><strong>Capillaries:</strong> One-cell-thick walls, allow exchange of oxygen, nutrients, and waste with tissues.</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🩸</span> Blood Composition</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Plasma:</strong> Liquid part, carries nutrients, hormones, and waste.</li>
+                            <li><strong>Red Blood Cells (RBCs):</strong> Carry oxygen using hemoglobin. 🔴</li>
+                            <li><strong>White Blood Cells (WBCs):</strong> Fight infections. ⚪</li>
+                            <li><strong>Platelets:</strong> Help blood clot to stop bleeding. 🩹</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">⚖️</span> Blood Pressure</h2>
+                        <ul class="list-disc pl-6 mb-4 space-y-2">
+                            <li><strong>Systolic pressure:</strong> When heart contracts.</li>
+                            <li><strong>Diastolic pressure:</strong> When heart relaxes.</li>
+                            <li>Normal range: about 120/80 mm Hg.</li>
+                        </ul>
+                        <p class="font-medium text-red-700">High blood pressure (hypertension) is dangerous and can cause heart disease. 🚨</p>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🤒</span> Diseases of Circulatory System</h2>
+                        <ul class="list-disc pl-6 mb-4 space-y-2">
+                            <li><strong>Hypertension:</strong> High blood pressure; risks heart attacks and strokes.</li>
+                            <li><strong>Atherosclerosis:</strong> Hardening of arteries due to fatty deposits.</li>
+                            <li><strong>Heart attack:</strong> Blockage of blood flow to heart muscle.</li>
+                            <li><strong>Stroke:</strong> Disruption of blood flow to the brain.</li>
+                        </ul>
+                        <p class="mt-4 font-semibold text-green-700"><strong>Prevention:</strong> Healthy diet, regular exercise, no smoking, managing stress. 💪</p>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🏃‍♀️</span> Everyday Applications</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Face turning red after running:</strong> Blood vessels dilate to release heat. 🥵</li>
+                            <li><strong>Lying down with feet up:</strong> Helps if dizzy by improving blood flow to brain.</li>
+                            <li><strong>Checking pulse:</strong> Feeling heartbeat through arteries can monitor heart rate. 🩺</li>
+                        </ul>
+                    </section>
+                </div>
+
+                <!-- Tab 6: The Connection & Summary -->
+                <div id="summary-connection" class="tab-pane">
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🤝</span> Respiratory–Circulatory Connection</h2>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Pulmonary circulation</strong> links breathing and circulation.</li>
+                            <li>Oxygen enters blood through lungs, travels via red blood cells.</li>
+                            <li>Circulatory system delivers oxygen to cells and carries away CO₂.</li>
+                        </ul>
+                        <p class="mt-4 font-medium">Both systems work together to keep cells energized and alive. 🌟</p>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">🗺️</span> Summary Journey</h2>
+                        <p class="mb-4">Imagine the incredible journey of oxygen and carbon dioxide:</p>
+                        <p class="font-semibold text-lg text-blue-800">Oxygen flow path: <span class="text-green-600">Air</span> &#8594; <span class="text-green-600">lungs</span> &#8594; <span class="text-green-600">alveoli</span> &#8594; <span class="text-red-600">blood</span> &#8594; <span class="text-red-600">heart</span> &#8594; <span class="text-red-600">body cells</span>.</p>
+                        <p class="font-semibold text-lg text-blue-800 mt-2">Carbon dioxide path: <span class="text-purple-600">Body cells</span> &#8594; <span class="text-purple-600">blood</span> &#8594; <span class="text-purple-600">heart</span> &#8594; <span class="text-green-600">lungs</span> &#8594; <span class="text-green-600">exhaled air</span>.</p>
+                        <p class="mt-4 font-medium">This highlights the amazing teamwork between breathing and blood flow! 🤝</p>
+                    </section>
+
+                    <section class="content-block">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-3">✅</span> Recap & Real-Life Takeaway</h2>
+                        <p class="text-2xl font-semibold text-purple-700 mb-4 text-center">“Breathing keeps you alive, but circulation makes sure every part of you gets the message.”</p>
+                        <p class="font-medium text-lg text-gray-700 mb-4">It's incredibly important to take care of these vital systems!</p>
+                        <p class="font-semibold text-green-700"><strong>Encourage:</strong> Healthy breathing habits, regular exercise, and a heart-healthy lifestyle for overall well-being. Keep learning and stay healthy! 🌱</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-section">
+        <p>&copy; 2025 Breathing Life: Educational Webpage</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Deactivate all buttons and hide all panes
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanes.forEach(pane => pane.classList.remove('active'));
+
+                    // Activate the clicked button
+                    button.classList.add('active');
+
+                    // Show the corresponding pane
+                    const targetTabId = button.dataset.tab;
+                    document.getElementById(targetTabId).classList.add('active');
+                });
+            });
+
+            // Set initial active tab on page load
+            const initialTabButton = document.querySelector('.tab-button.active');
+            if (initialTabButton) {
+                const initialTabId = initialTabButton.dataset.tab;
+                document.getElementById(initialTabId).classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
