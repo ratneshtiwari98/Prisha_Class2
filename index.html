@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Respiratory & Circulatory Systems</title>
+    <title>Breathing Life: Respiratory & Circulatory Systems</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -12,6 +12,10 @@
             font-family: 'Inter', sans-serif;
             background-color: #F1F5F9; /* Page bg: slate-100 */
             color: #334155; /* Text (body): slate-700 */
+            -webkit-user-select: auto; /* Allow text selection */
+            -moz-user-select: auto;
+            -ms-user-select: auto;
+            user-select: auto;
         }
         .header-section {
             background-color: #0F766E; /* Primary (tabs active, header/footer): Teal 700 */
@@ -142,13 +146,133 @@
         .text-purple-700, .text-blue-800, .text-purple-600 { /* For Summary/Recap texts */
             color: #0F172A; /* Headings: slate-900 */
         }
+        
+        /* New Quiz Styles */
+        .quiz-container-flex {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .quiz-option-btn {
+            padding: 1rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .quiz-option-btn:hover:not(:disabled) {
+            background-color: #F0FDFA;
+        }
+        
+        .quiz-option-btn.correct {
+            background-color: #ECFDF5;
+            border-color: #10B981;
+        }
+
+        .quiz-option-btn.incorrect {
+            background-color: #FFE4E6;
+            border-color: #E11D48;
+        }
+        
+        .btn-primary {
+            background-color: #0F766E;
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: #115E59;
+        }
+        
+        .quiz-feedback {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .quiz-feedback.hidden {
+            display: none;
+        }
+
+        .feedback-correct-style {
+            background-color: #ECFDF5;
+            border: 1px solid #10B981;
+            color: #047857;
+        }
+
+        .feedback-incorrect-style {
+            background-color: #FFE4E6;
+            border: 1px solid #E11D48;
+            color: #9F1239;
+        }
+
+        .quiz-sidebar {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 1rem;
+            background-color: #f9fafb;
+            margin-top: 2rem;
+        }
+
+        .quiz-sidebar-grid {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 0.5rem;
+            text-align: center;
+        }
+
+        .quiz-sidebar-btn {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #E2E8F0;
+            background-color: #F8FAFC;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-sidebar-btn.active-question {
+            background-color: #0F766E;
+            color: white;
+            border-color: #0F766E;
+        }
+
+        .quiz-sidebar-btn.answered-correct {
+            background-color: #ECFDF5;
+            border-color: #047857;
+            color: #047857;
+        }
+
+        .quiz-sidebar-btn.answered-incorrect {
+            background-color: #FFE4E6;
+            border-color: #E11D48;
+            color: #9F1239;
+        }
+
+        .quiz-summary-card {
+            background-color: #fefefe;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E2E8F0;
+        }
     </style>
 </head>
 <body class="leading-relaxed">
 
     <!-- Header Section - Main Title -->
     <header class="header-section">
-        <h1 class="text-5xl font-extrabold mb-4">The Respiratory & Circulatory Systems</h1>
+        <h1 class="text-5xl font-extrabold mb-4">Breathing Life: The Respiratory & Circulatory Systems</h1>
+        <p class="text-xl font-medium">From oxygen in the air to energy in your cells. 💨 ❤️</p>
     </header>
 
     <main class="container mx-auto p-6 md:p-8 lg:p-10">
@@ -162,6 +286,7 @@
                 <button class="tab-button" data-tab="circulation-intro">Circulatory Intro & Heart</button>
                 <button class="tab-button" data-tab="circulation-health">Blood, Vessels & Circulatory Health</button>
                 <button class="tab-button" data-tab="summary-connection">The Connection & Summary</button>
+                <button class="tab-button" data-tab="quiz-content">Quiz</button>
             </div>
 
             <!-- Tab Content -->
@@ -372,7 +497,7 @@
                                 </thead>
                                 <tbody>
                                     <tr><td>Heart</td><td>Pumps blood throughout the body</td></tr>
-                                    <tr><td>Arteries</td><td>Carry oxygen-rich(not correct, hence don't read), blood away from the heart</td></tr>
+                                    <tr><td>Arteries</td><td>Carry oxygen-rich blood away from the heart</td></tr>
                                     <tr><td>Veins</td><td>Carry oxygen-poor blood back to the heart</td></tr>
                                     <tr><td>Capillaries</td><td>Tiny vessels where substances exchange between blood and tissues</td></tr>
                                     <tr><td>Blood</td><td>Transports oxygen, nutrients, wastes, and hormones</td></tr>
@@ -511,41 +636,595 @@
                         <p class="font-semibold text-green-700"><strong>Encourage:</strong> Healthy breathing habits, regular exercise, and a heart-healthy lifestyle for overall well-being. Keep learning and stay healthy! 🌱</p>
                     </section>
                 </div>
+
+                <!-- Tab 7: Quiz -->
+                <div id="quiz-content" class="tab-pane">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-6 text-center">🧠 Test Your Knowledge!</h2>
+                    <p class="text-lg text-center mb-6">Ready to see how much you've learned? Take this quick quiz!</p>
+
+                    <div class="flex flex-col quiz-container-flex">
+                        <!-- Main Quiz Area -->
+                        <div class="flex-grow bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <div id="question-display" class="mb-6">
+                                <p class="text-xl font-semibold mb-4" id="question-text"></p>
+                                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Options will be loaded here by JS -->
+                                </div>
+                            </div>
+                            <div id="feedback-display" class="quiz-feedback hidden"></div>
+                            <div class="flex justify-between items-center mt-6">
+                                <button id="next-btn" class="btn-primary">Next Question</button>
+                                <button id="restart-btn" class="btn-primary hidden">Restart Quiz</button>
+                                <p class="text-lg font-semibold">Score: <span id="score">0</span> / <span id="total-questions"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Quiz Sidebar -->
+                    <div class="quiz-sidebar">
+                        <h4 class="text-lg font-bold text-gray-800 mb-3">Questions</h4>
+                        <div id="quiz-sidebar-nav" class="quiz-sidebar-grid">
+                            <!-- Sidebar buttons will be generated here -->
+                        </div>
+                    </div>
+                    <!-- Quiz Summary Section -->
+                    <div id="quiz-summary" class="quiz-summary-card mt-8 hidden">
+                        <h3 class="text-3xl font-bold text-gray-800 mb-4">Quiz Summary</h3>
+                        <p class="text-xl font-semibold mb-4">Final Score: <span id="final-score">0</span> / <span id="total-questions-summary"></span></p>
+
+                        <h4 class="text-2xl font-bold text-blue-700 mb-3">Performance Analysis</h4>
+                        <div id="weak-topics-analysis" class="space-y-2">
+                            <!-- Topics will be displayed here -->
+                        </div>
+                        <button id="summary-restart-btn" class="btn-primary mt-6">Restart Quiz</button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="footer-section">
         <p>&copy; 2025 Breathing Life: Educational Webpage</p>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabPanes = document.querySelectorAll('.tab-pane');
+        // Quiz Questions Data (UPDATED with topics)
+        const quizQuestions = [
+            {
+                question: "1. Which part is called the “voice box”?",
+                options: ["A) Trachea", "B) Larynx", "C) Pharynx", "D) Bronchi"],
+                answer: "B) Larynx",
+                explanation: "The larynx contains your vocal cords and lets you speak.",
+                realLife: "When you lose your voice after yelling, your larynx is strained.",
+                topic: "Respiratory System"
+            },
+            {
+                question: "2. During inhalation, what happens to the diaphragm?",
+                options: ["A) It relaxes and moves up", "B) It contracts and flattens", "C) It stays still", "D) It becomes rounder"],
+                answer: "B) It contracts and flattens",
+                explanation: "This increases chest volume, lowering air pressure so air flows in.",
+                realLife: "Deep belly breathing in yoga uses this movement.",
+                topic: "Respiratory System"
+            },
+            {
+                question: "3. Which organ is called the “windpipe”?",
+                options: ["A) Bronchi", "B) Esophagus", "C) Trachea", "D) Alveoli"],
+                answer: "C) Trachea",
+                explanation: "The trachea connects the larynx to the bronchi and lets air travel to the lungs.",
+                realLife: "Coughing happens if something touches your trachea by accident!",
+                topic: "Respiratory System"
+            },
+            {
+                question: "4. Which organ controls automatic breathing?",
+                options: ["A) Heart", "B) Medulla oblongata", "C) Lungs", "D) Kidneys"],
+                answer: "B) Medulla oblongata",
+                explanation: "This part of the brain automatically adjusts breath rate.",
+                realLife: "You keep breathing—even when asleep—thanks to your brainstem!",
+                topic: "Respiratory System"
+            },
+            {
+                question: "5. Which blood vessels are only one cell thick for exchange?",
+                options: ["A) Veins", "B) Arteries", "C) Capillaries", "D) Bronchi"],
+                answer: "C) Capillaries",
+                explanation: "Capillaries allow rapid exchange of gases, nutrients, and waste.",
+                realLife: "Red marks (bruises) show up when capillaries are broken under your skin.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "6. Which blood vessels carry blood back to the heart?",
+                options: ["A) Arteries", "B) Veins", "C) Capillaries", "D) Bronchi"],
+                answer: "B) Veins",
+                explanation: "Veins have valves that help return blood to the heart.",
+                realLife: "The blue lines visible under your skin are veins.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "7. High blood pressure is also called:",
+                options: ["A) Hypertension", "B) Hypotension", "C) Hyperventilation", "D) Anemia"],
+                answer: "A) Hypertension",
+                explanation: "Hypertension strains your arteries and organs and raises disease risk.",
+                realLife: "Regular exercise and a healthy diet can help prevent it.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "8. Tiny sacs in the lungs for gas exchange are called:",
+                options: ["A) Bronchi", "B) Pharynx", "C) Alveoli", "D) Nephrons"],
+                answer: "C) Alveoli",
+                explanation: "Alveoli let oxygen enter blood and remove carbon dioxide.",
+                realLife: "Smoking damages alveoli, making breathing difficult.",
+                topic: "Respiratory System"
+            },
+            {
+                question: "9. Which chamber pumps oxygenated blood to the whole body?",
+                options: ["A) Right atrium", "B) Right ventricle", "C) Left ventricle", "D) Left atrium"],
+                answer: "C) Left ventricle",
+                explanation: "The left ventricle’s powerful walls send blood all around your body.",
+                realLife: "Exercise strengthens your left ventricle, boosting fitness.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "10. Which part keeps the trachea open during neck movement?",
+                options: ["A) Smooth muscle", "B) Epiglottis", "C) C-shaped cartilage rings", "D) Diaphragm"],
+                answer: "C) C-shaped cartilage rings",
+                explanation: "These stiff rings prevent the trachea from collapsing as you move.",
+                realLife: "Even when you bend your neck, breathing stays effortless.",
+                topic: "Respiratory System"
+            },
+            {
+                question: "11. Which valves control blood leaving the ventricles?",
+                options: ["A) Mitral valves", "B) Semilunar valves", "C) Tricuspid valves", "D) Pulmonary veins"],
+                answer: "B) Semilunar valves",
+                explanation: "Semilunar valves prevent backward flow as blood exits the heart.",
+                realLife: "Faulty valves can cause heart murmurs, which doctors listen for.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "12. Normal adult blood pressure is around:",
+                options: ["A) 60/40 mm Hg", "B) 80/60 mm Hg", "C) 120/80 mm Hg", "D) 140/100 mm Hg"],
+                answer: "C) 120/80 mm Hg",
+                explanation: "This is the healthy average for adults.",
+                realLife: "Doctors use a cuff to measure your blood pressure during checkups.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "13. Which type of respiration produces lactic acid and cramps?",
+                options: ["A) Aerobic", "B) Anaerobic", "C) External", "D) Internal"],
+                answer: "B) Anaerobic",
+                explanation: "Anaerobic respiration occurs without oxygen and causes lactic acid buildup.",
+                realLife: "Fast running can make your muscles cramp due to this process.",
+                topic: "Respiratory System"
+            },
+            {
+                question: "14. The “lub-dub” sound of the heart is due to:",
+                options: ["A) Beats of the atria", "B) Opening of blood vessels", "C) Closing of heart valves", "D) Pulsing arteries"],
+                answer: "C) Closing of heart valves",
+                explanation: "“Lub” is the AV valves closing, “dub” is the semilunar valves.",
+                realLife: "A stethoscope lets doctors “hear” if your heart sounds normal.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "15. What does systolic pressure mean in 120/80 mm Hg?",
+                options: ["A) Pressure when heart rests", "B) Pressure with each heartbeat", "C) Pressure in the lungs", "D) Pressure in the veins"],
+                answer: "B) Pressure with each heartbeat",
+                explanation: "Systolic is the pressure during the heart’s contraction.",
+                realLife: "High systolic pressure signals risks for heart disease.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "16. Which structure acts as a crossroads for food and air?",
+                options: ["A) Trachea", "B) Pharynx", "C) Alveolus", "D) Larynx"],
+                answer: "B) Pharynx",
+                explanation: "Both food and air pass through the pharynx before separating.",
+                realLife: "Swallowing “down the wrong tube” happens here.",
+                topic: "Respiratory System"
+            },
+            {
+                question: "17. Breathing mainly involves which organs?",
+                options: ["A) Lungs and kidneys", "B) Lungs and heart", "C) Lungs and diaphragm", "D) Lungs and liver"],
+                answer: "C) Lungs and diaphragm",
+                explanation: "The lungs exchange gases, and the diaphragm moves air in and out.",
+                realLife: "Hiccups are from diaphragm spasms!",
+                topic: "Respiratory System"
+            },
+            {
+                question: "18. Which gas mainly makes you breathe faster?",
+                options: ["A) Nitrogen", "B) Oxygen", "C) Carbon dioxide", "D) Helium"],
+                answer: "C) Carbon dioxide",
+                explanation: "High CO₂ in blood signals your brain to increase breathing.",
+                realLife: "You pant after exercise to expel more CO₂.",
+                topic: "Respiratory System"
+            },
+            {
+                question: "19. Which artery carries deoxygenated blood?",
+                options: ["A) Pulmonary artery", "B) Aorta", "C) Coronary artery", "D) Femoral artery"],
+                answer: "A) Pulmonary artery",
+                explanation: "The pulmonary artery is unique—it sends “used” blood from the heart to the lungs for oxygen.",
+                realLife: "Most arteries carry oxygen-rich blood, but the pulmonary artery is the exception.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "20. Why does your face turn red after running?",
+                options: ["A) Blood vessels constrict", "B) Capillaries under skin expand", "C) You sweat and cool down", "D) Lungs pump harder"],
+                answer: "B) Capillaries under skin expand",
+                explanation: "Blood carries extra heat to your skin so you can release it.",
+                realLife: "This natural reaction keeps your body from overheating.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "21. Which structure warms, moistens, and filters incoming air?",
+                options: ["A) Alveoli", "B) Nasal cavity", "C) Trachea", "D) Diaphragm"],
+                answer: "B) Nasal cavity",
+                explanation: "Tiny hairs and mucus in the nose protect lungs from dust and germs.",
+                realLife: "Breathing through your nose protects you better than mouth breathing.",
+                topic: "Respiratory System"
+            },
+            {
+                question: "22. Which blood cells fight infections?",
+                options: ["A) Red blood cells", "B) Platelets", "C) White blood cells", "D) Plasma"],
+                answer: "C) White blood cells",
+                explanation: "These cells attack and destroy bacteria and viruses.",
+                realLife: "Your “swollen glands” when sick are full of active white blood cells.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "23. Which type of circulation is from heart → lungs → heart?",
+                options: ["A) Systemic", "B) Coronary", "C) Pulmonary", "D) Portal"],
+                answer: "C) Pulmonary",
+                explanation: "Pulmonary circulation exchanges gases in the lungs for the rest of the body.",
+                realLife: "Oxygen enters your blood on every trip through the lungs.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "24. Which disease destroys alveoli permanently?",
+                options: ["A) Asthma", "B) Bronchitis", "C) Pneumonia", "D) Emphysema"],
+                answer: "D) Emphysema",
+                explanation: "In emphysema, alveoli become damaged, reducing oxygen supply.",
+                realLife: "Long-term smoking is the most common cause.",
+                topic: "Respiratory System"
+            },
+            {
+                question: "25. Which blood part carries hormones and waste?",
+                options: ["A) Red blood cells", "B) Plasma", "C) White blood cells", "D) Platelets"],
+                answer: "B) Plasma",
+                explanation: "Plasma is the liquid in blood that carries nutrients, hormones, and waste.",
+                realLife: "Plasma donation helps save lives in hospitals.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "26. Which organ works like a “double pump”?",
+                options: ["A) Lungs", "B) Heart", "C) Kidney", "D) Liver"],
+                answer: "B) Heart",
+                explanation: "The left side pumps blood to the body, right side to the lungs.",
+                realLife: "Each time your heart beats, these two circuits work together.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "27. Which protein in RBCs binds oxygen?",
+                options: ["A) Insulin", "B) Hemoglobin", "C) Myosin", "D) Collagen"],
+                answer: "B) Hemoglobin",
+                explanation: "Hemoglobin attaches to oxygen for delivery to tissues.",
+                realLife: "People with anemia may have fewer healthy red cells.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "28. Which circulation brings blood to heart muscle itself?",
+                options: ["A) Pulmonary", "B) Coronary", "C) Systemic", "D) Portal"],
+                answer: "B) Coronary",
+                explanation: "Coronary circulation nourishes the heart’s own cells.",
+                realLife: "Blocked coronary arteries cause heart attacks.",
+                topic: "Circulatory System"
+            },
+            {
+                question: "29. In gas exchange, oxygen moves due to:",
+                options: ["A) Osmosis", "B) Diffusion from high to low concentration", "C) Muscle action", "D) Active transport"],
+                answer: "B) Diffusion from high to low concentration",
+                explanation: "Oxygen enters blood in the lungs simply because there’s more of it in the air than in blood.",
+                realLife: "Holding your breath builds up carbon dioxide, not oxygen.",
+                topic: "Respiratory System"
+            },
+            {
+                question: "30. What prevents food from entering trachea while swallowing?",
+                options: ["A) Alveoli", "B) Valve in heart", "C) Epiglottis", "D) Tongue"],
+                answer: "C) Epiglottis",
+                explanation: "The epiglottis flaps over your windpipe so food goes into the esophagus.",
+                realLife: "Choking happens if it doesn’t work properly.",
+                topic: "Respiratory System"
+            }
+        ];
 
+        // Quiz elements
+        const questionDisplay = document.getElementById('question-display');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackDisplay = document.getElementById('feedback-display');
+        const nextButton = document.getElementById('next-btn');
+        const restartButton = document.getElementById('restart-btn');
+        const scoreSpan = document.getElementById('score');
+        const totalQuestionsSpan = document.getElementById('total-questions');
+        const quizSummary = document.getElementById('quiz-summary');
+        const finalScoreSpan = document.getElementById('final-score');
+        const totalQuestionsSummarySpan = document.getElementById('total-questions-summary');
+        const weakTopicsAnalysisDiv = document.getElementById('weak-topics-analysis');
+        const summaryRestartBtn = document.getElementById('summary-restart-btn');
+        const quizSidebarNav = document.getElementById('quiz-sidebar-nav');
+
+
+        // Tab elements
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-pane');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOptionButton = null;
+        let questionStartTime = 0;
+        let questionPerformanceData = Array(quizQuestions.length).fill(null); // Initialize with nulls for each question
+        let shuffledQuizQuestions = [...quizQuestions]; // Make a mutable copy
+
+        // --- Quiz Functions ---
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            shuffledQuizQuestions = [...quizQuestions].sort(() => Math.random() - 0.5); // Shuffle on start
+            questionPerformanceData = Array(quizQuestions.length).fill(null); // Reset data for new quiz
+            totalQuestionsSpan.textContent = quizQuestions.length;
+            scoreSpan.textContent = score;
+            nextButton.textContent = 'Next Question';
+            nextButton.classList.remove('hidden');
+            questionDisplay.classList.remove('hidden'); // Show question area
+            quizSummary.classList.add('hidden'); // Hide summary
+            restartButton.classList.add('hidden');
+            summaryRestartBtn.classList.add('hidden');
+            
+            generateSidebarNav(); // Generate sidebar on quiz start
+            loadQuestion(currentQuestionIndex); // Load the first question
+        }
+
+        function loadQuestion(index) {
+            currentQuestionIndex = index;
+            selectedOptionButton = null; // Reset selected option for new question
+            feedbackDisplay.classList.add('hidden');
+            feedbackDisplay.textContent = '';
+            nextButton.disabled = true; // Disable next until an option is selected
+
+            // Update sidebar active state
+            updateSidebarActiveState();
+
+            if (currentQuestionIndex < shuffledQuizQuestions.length) {
+                const q = shuffledQuizQuestions[currentQuestionIndex];
+                questionText.textContent = q.question;
+                optionsContainer.innerHTML = ''; // Clear previous options
+
+                q.options.forEach((option, optionIndex) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('quiz-option-btn');
+                    button.dataset.index = optionIndex; // Store option index
+                    button.addEventListener('click', () => selectOption(button, q.answer));
+                    optionsContainer.appendChild(button);
+                });
+
+                // If question was previously answered, re-select the answer and show feedback
+                const performance = questionPerformanceData[currentQuestionIndex];
+                if (performance) {
+                    const previouslySelectedButton = Array.from(optionsContainer.children).find(
+                        btn => btn.textContent === performance.userAnswer
+                    );
+                    if (previouslySelectedButton) {
+                        selectOption(previouslySelectedButton, q.answer, true); // Pass true to prevent re-recording time/score
+                    }
+                }
+                questionStartTime = performance.now(); // Record start time for the question
+            } else {
+                endQuiz();
+            }
+        }
+
+        function selectOption(selectedButton, correctAnswer, isReloading = false) {
+            if (selectedOptionButton && !isReloading) return; // Prevent re-selection unless reloading
+
+            const questionEndTime = performance.now(); // Record end time
+            const timeTaken = ((questionEndTime - questionStartTime) / 1000).toFixed(2); // Time in seconds
+
+            selectedOptionButton = selectedButton; // Mark this option as selected
+            nextButton.disabled = false; // Enable next button
+
+            const allOptionButtons = optionsContainer.querySelectorAll('.quiz-option-btn');
+            allOptionButtons.forEach(btn => {
+                btn.disabled = true; // Disable all options after selection
+                if (btn.textContent === correctAnswer) {
+                    btn.classList.add('correct'); // Highlight correct answer
+                }
+            });
+
+            const isCorrect = (selectedButton.textContent === correctAnswer);
+            if (isCorrect) {
+                if (!isReloading) { // Only update score if not reloading a previously answered question
+                    score++;
+                    scoreSpan.textContent = score;
+                }
+                const currentQuestion = quizQuestions.find(q => q.question === shuffledQuizQuestions[currentQuestionIndex].question);
+                feedbackDisplay.innerHTML = `<p class="font-bold">Correct!</p><p class="mt-2">${currentQuestion.explanation}</p><p class="mt-1"><strong>Real-life:</strong> ${currentQuestion.realLife}</p>`;
+                feedbackDisplay.classList.remove('hidden', 'feedback-incorrect-style');
+                feedbackDisplay.classList.add('feedback-correct-style');
+            } else {
+                selectedButton.classList.add('incorrect'); // Highlight incorrect selection
+                const currentQuestion = quizQuestions.find(q => q.question === shuffledQuizQuestions[currentQuestionIndex].question);
+                feedbackDisplay.innerHTML = `<p class="font-bold">Incorrect.</p><p class="mt-2">${currentQuestion.explanation}</p><p class="mt-1"><strong>Real-life:</strong> ${currentQuestion.realLife}</p>`;
+                feedbackDisplay.classList.remove('hidden', 'feedback-correct-style');
+                feedbackDisplay.classList.add('feedback-incorrect-style');
+            }
+
+            // Store performance data for this question if not reloading
+            if (!isReloading) {
+                questionPerformanceData[currentQuestionIndex] = {
+                    question: shuffledQuizQuestions[currentQuestionIndex].question,
+                    topic: shuffledQuizQuestions[currentQuestionIndex].topic,
+                    isCorrect: isCorrect,
+                    timeTaken: parseFloat(timeTaken),
+                    userAnswer: selectedButton.textContent // Store user's answer
+                };
+            }
+
+            // Update sidebar button state based on answer
+            const sidebarButton = quizSidebarNav.children[currentQuestionIndex];
+            if (sidebarButton) {
+                sidebarButton.classList.remove('answered-correct', 'answered-incorrect');
+                if (isCorrect) {
+                    sidebarButton.classList.add('answered-correct');
+                } else {
+                    sidebarButton.classList.add('answered-incorrect');
+                }
+            }
+        }
+
+        function endQuiz() {
+            questionDisplay.classList.add('hidden'); // Hide current question display
+            nextButton.classList.add('hidden');
+
+            // Show Quiz Summary
+            quizSummary.classList.remove('hidden');
+            finalScoreSpan.textContent = score;
+            totalQuestionsSummarySpan.textContent = quizQuestions.length;
+
+            analyzeWeakTopics();
+        }
+
+        function analyzeWeakTopics() {
+            const topicStats = {}; // { "Topic Name": { correct: 0, total: 0, totalTime: 0, incorrectCount: 0 } }
+
+            questionPerformanceData.forEach(data => {
+                if (!data) return; // Skip if question not attempted
+
+                if (!topicStats[data.topic]) {
+                    topicStats[data.topic] = { correct: 0, total: 0, totalTime: 0, incorrectCount: 0 };
+                }
+                topicStats[data.topic].total++;
+                topicStats[data.topic].totalTime += data.timeTaken;
+                if (data.isCorrect) {
+                    topicStats[data.topic].correct++;
+                } else {
+                    topicStats[data.topic].incorrectCount++;
+                }
+            });
+
+            const topicsForAnalysis = [];
+            for (const topic in topicStats) {
+                const stats = topicStats[topic];
+                const avgTime = stats.totalTime / stats.total;
+                topicsForAnalysis.push({
+                    name: topic,
+                    correct: stats.correct, // For display
+                    total: stats.total, // For display
+                    avgTime: avgTime // For display
+                });
+            }
+
+            weakTopicsAnalysisDiv.innerHTML = '';
+            if (topicsForAnalysis.length === 0 || questionPerformanceData.every(data => data === null)) {
+                weakTopicsAnalysisDiv.innerHTML = '<p class="text-gray-500">No questions attempted yet to analyze topics.</p>';
+                return;
+            }
+
+            topicsForAnalysis.forEach(topic => {
+                const topicElement = document.createElement('div');
+                topicElement.classList.add('weak-topic-item');
+                topicElement.innerHTML = `
+                    <p class="font-semibold text-gray-800">${topic.name}</p>
+                    <p class="text-sm">Correct: ${topic.correct} / ${topic.total} questions</p>
+                    <p class="text-sm">Average time per question: ${topic.avgTime.toFixed(2)} seconds</p>
+                `;
+                weakTopicsAnalysisDiv.appendChild(topicElement);
+            });
+        }
+
+        // --- Sidebar Functions ---
+        function generateSidebarNav() {
+            quizSidebarNav.innerHTML = ''; // Clear existing buttons
+            for (let i = 0; i < shuffledQuizQuestions.length; i++) {
+                const sidebarBtn = document.createElement('button');
+                sidebarBtn.textContent = i + 1;
+                sidebarBtn.classList.add('quiz-sidebar-btn');
+                sidebarBtn.dataset.questionIndex = i;
+                sidebarBtn.addEventListener('click', () => loadQuestion(i));
+                quizSidebarNav.appendChild(sidebarBtn);
+            }
+            updateSidebarActiveState(); // Set initial active state
+        }
+
+        function updateSidebarActiveState() {
+            const sidebarButtons = quizSidebarNav.querySelectorAll('.quiz-sidebar-btn');
+            sidebarButtons.forEach((btn, index) => {
+                btn.classList.remove('active-question');
+                // Remove previous answered states before applying new ones
+                btn.classList.remove('answered-correct', 'answered-incorrect');
+
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('active-question');
+                }
+
+                // Apply answered state if data exists
+                const performance = questionPerformanceData[index];
+                if (performance) {
+                    if (performance.isCorrect) {
+                        btn.classList.add('answered-correct');
+                    } else {
+                        btn.classList.add('answered-incorrect');
+                    }
+                }
+            });
+        }
+
+
+        // --- Tab Functions ---
+        function setupTabs() {
             tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Deactivate all buttons and hide all panes
+                button.addEventListener('click', (event) => {
+                    const tabId = button.dataset.tab;
+
+                    // Deactivate all buttons and hide all content
                     tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabPanes.forEach(pane => pane.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
 
                     // Activate the clicked button
                     button.classList.add('active');
 
-                    // Show the corresponding pane
-                    const targetTabId = button.dataset.tab;
-                    document.getElementById(targetTabId).classList.add('active');
+                    // Show the corresponding content
+                    const targetContent = document.getElementById(tabId);
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+
+                    // Special handling for the quiz tab
+                    if (tabId === 'quiz-content') {
+                        startQuiz(); // Start the quiz when quiz tab is opened
+                    }
                 });
             });
 
-            // Set initial active tab on page load
+            // Set initial active tab
             const initialTabButton = document.querySelector('.tab-button.active');
             if (initialTabButton) {
                 const initialTabId = initialTabButton.dataset.tab;
                 document.getElementById(initialTabId).classList.add('active');
             }
+        }
+        
+        // Event listeners for quiz buttons
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < shuffledQuizQuestions.length) {
+                loadQuestion(currentQuestionIndex);
+            } else {
+                endQuiz();
+            }
         });
+
+        restartButton.addEventListener('click', startQuiz);
+        summaryRestartBtn.addEventListener('click', startQuiz);
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', setupTabs);
     </script>
 </body>
 </html>
